@@ -17,6 +17,7 @@
 package com.tlf.basic.support.galleryfinal;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -43,8 +44,7 @@ import com.tlf.basic.support.galleryfinal.permission.EasyPermissions;
 import com.tlf.basic.support.galleryfinal.utils.DeviceUtils;
 import com.tlf.basic.support.galleryfinal.utils.PhotoTools;
 import com.tlf.basic.support.galleryfinal.widget.FloatingActionButton;
-import com.tlf.basic.utils.StringUtils;
-import com.tlf.basic.utils.io.FilenameUtils;
+import com.tlf.basic.support.utils.CurrentUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -299,7 +299,7 @@ public class PhotoSelectActivity extends PhotoBaseActivity implements View.OnCli
             for (int i = 1; i < mAllPhotoFolderList.size(); i++) {
                 PhotoFolderInfo folderInfo = mAllPhotoFolderList.get(i);
                 String folderB = null;
-                if (!StringUtils.isEmpty(photoInfo.getPhotoPath())) {
+                if (!CurrentUtils.isEmpty(photoInfo.getPhotoPath())) {
                     folderB = new File(photoInfo.getPhotoPath()).getParent();
                 }
                 if (TextUtils.equals(folderA, folderB)) {
@@ -427,7 +427,7 @@ public class PhotoSelectActivity extends PhotoBaseActivity implements View.OnCli
             mPhotoTargetFolder = null;
         } else {
             PhotoInfo photoInfo = photoFolderInfo.getCoverPhoto();
-            if (photoInfo != null && !StringUtils.isEmpty(photoInfo.getPhotoPath())) {
+            if (photoInfo != null && !CurrentUtils.isEmpty(photoInfo.getPhotoPath())) {
                 mPhotoTargetFolder = new File(photoInfo.getPhotoPath()).getParent();
             } else {
                 mPhotoTargetFolder = null;
@@ -447,7 +447,7 @@ public class PhotoSelectActivity extends PhotoBaseActivity implements View.OnCli
         if (!GalleryFinal.getFunctionConfig().isMutiSelect()) {
             mSelectPhotoList.clear();
             mSelectPhotoList.add(info);
-            String ext = FilenameUtils.getExtension(info.getPhotoPath());
+            String ext = CurrentUtils.getExtension(info.getPhotoPath());
             if (GalleryFinal.getFunctionConfig().isEditPhoto() && (ext.equalsIgnoreCase("png")
                     || ext.equalsIgnoreCase("jpg") || ext.equalsIgnoreCase("jpeg"))) {
                 toPhotoEdit();
@@ -486,16 +486,16 @@ public class PhotoSelectActivity extends PhotoBaseActivity implements View.OnCli
         if (holder != null) {
             if (checked) {
                 //holder.mIvCheck.setBackgroundColor(GalleryFinal.getGalleryTheme().com.tlf.basic.base.autolayout());
-                if(null!=GalleryFinal.getGalleryTheme().getCheckPressedSelectedDrawable()){
+                if (null != GalleryFinal.getGalleryTheme().getCheckPressedSelectedDrawable()) {
                     holder.mIvCheck.setBackgroundDrawable(GalleryFinal.getGalleryTheme().getCheckPressedSelectedDrawable());
-                }else {
+                } else {
                     holder.mIvCheck.setBackgroundDrawable(PhotoSelectActivity.this.getResources().getDrawable(R.drawable.bg_gf_check_pressed));
                 }
             } else {
                 //holder.mIvCheck.setBackgroundColor(GalleryFinal.getGalleryTheme().getCheckNornalColor());
-                if(null!=GalleryFinal.getGalleryTheme().getCheckNornalSelectedDrawable()){
+                if (null != GalleryFinal.getGalleryTheme().getCheckNornalSelectedDrawable()) {
                     holder.mIvCheck.setBackgroundDrawable(GalleryFinal.getGalleryTheme().getCheckNornalSelectedDrawable());
-                }else {
+                } else {
                     holder.mIvCheck.setBackgroundDrawable(PhotoSelectActivity.this.getResources().getDrawable(R.drawable.bg_gf_check_normal));
                 }
             }

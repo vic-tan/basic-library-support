@@ -16,11 +16,10 @@
 package com.tlf.basic.support.galleryfinal.widget.zoonview;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.ViewConfiguration;
-
-import com.tlf.basic.utils.Logger;
 
 
 public class CupcakeGestureDetector implements GestureDetector {
@@ -71,7 +70,7 @@ public class CupcakeGestureDetector implements GestureDetector {
                 if (null != mVelocityTracker) {
                     mVelocityTracker.addMovement(ev);
                 } else {
-                    Logger.d("Velocity tracker is null");
+                    Log.d("","Velocity tracker is null");
                 }
 
                 mLastTouchX = getActiveX(ev);

@@ -19,12 +19,12 @@ package com.tlf.basic.support.galleryfinal.utils;
 import android.content.Context;
 import android.database.Cursor;
 import android.provider.MediaStore;
+import android.util.Log;
 
 import com.tlf.basic.support.R;
 import com.tlf.basic.support.galleryfinal.GalleryFinal;
 import com.tlf.basic.support.galleryfinal.model.PhotoFolderInfo;
 import com.tlf.basic.support.galleryfinal.model.PhotoInfo;
-import com.tlf.basic.utils.Logger;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -40,6 +40,7 @@ public class PhotoTools {
 
     /**
      * 获取所有图片
+     *
      * @param context
      * @return
      */
@@ -82,7 +83,7 @@ public class PhotoTools {
                     //Log.d("--->",path);
                     //final String thumb = cursor.getString(thumbImageColumn);
                     File file = new File(path);
-                    if ( (filterList == null || !filterList.contains(path)) && file.exists() && file.length() > 0 ) {
+                    if ((filterList == null || !filterList.contains(path)) && file.exists() && file.length() > 0) {
                         final PhotoInfo photoInfo = new PhotoInfo();
                         photoInfo.setPhotoId(imageId);
                         photoInfo.setPhotoPath(path);
@@ -114,7 +115,7 @@ public class PhotoTools {
                 }
             }
         } catch (Exception ex) {
-            Logger.e(ex);
+            Log.e("", ex.toString());
         } finally {
             if (cursor != null) {
                 cursor.close();

@@ -25,8 +25,8 @@ import android.content.pm.PackageManager;
 import android.support.annotation.StringRes;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 
-import com.tlf.basic.utils.Logger;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -77,7 +77,6 @@ public class EasyPermissions {
      * @param object      Activity or Fragment requesting permissions. Should implement
      *                    {@link android.support.v4.app.ActivityCompat.OnRequestPermissionsResultCallback}
      *                    or
-     *                    {@link android.support.v13.app.FragmentCompat.OnRequestPermissionsResultCallback}
      * @param rationale   a message explaining why the application needs this set of permissions, will
      *                    be displayed if the user rejects the request the first time.
      * @param requestCode request code to track this request, must be < 256.
@@ -97,7 +96,6 @@ public class EasyPermissions {
      * @param object         Activity or Fragment requesting permissions. Should implement
      *                       {@link android.support.v4.app.ActivityCompat.OnRequestPermissionsResultCallback}
      *                       or
-     *                       {@link android.support.v13.app.FragmentCompat.OnRequestPermissionsResultCallback}
      * @param rationale      a message explaining why the application needs this set of permissions, will
      *                       be displayed if the user rejects the request the first time.
      * @param positiveButton custom text for positive button
@@ -242,9 +240,9 @@ public class EasyPermissions {
                         }
                         method.invoke(object);
                     } catch (IllegalAccessException e) {
-                        Logger.e(TAG, "runDefaultMethod:IllegalAccessException", e);
+                        Log.e(TAG, "runDefaultMethod:IllegalAccessException", e);
                     } catch (InvocationTargetException e) {
-                        Logger.e(TAG, "runDefaultMethod:InvocationTargetException", e);
+                        Log.e(TAG, "runDefaultMethod:InvocationTargetException", e);
                     }
                 }
             }

@@ -33,8 +33,7 @@ import android.view.WindowManager;
 
 import com.tlf.basic.support.R;
 import com.tlf.basic.support.galleryfinal.GalleryFinal;
-import com.tlf.basic.utils.Logger;
-import com.tlf.basic.utils.io.FilenameUtils;
+import com.tlf.basic.support.utils.CurrentUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -129,10 +128,10 @@ public abstract class CropImageActivity extends MonitoredActivity {
                 option.inSampleSize = sampleSize;
                 rotateBitmap = new RotateBitmap(BitmapFactory.decodeStream(is, null, option), exifRotation);
             } catch (IOException e) {
-                Logger.e(e);
+                e.printStackTrace();
 //                setCropSaveException(e);
             } catch (OutOfMemoryError e) {
-                Logger.e(e.toString());
+                e.printStackTrace();
 //                setCropSaveException(e);
             } finally {
                 CropUtil.closeSilently(is);
@@ -361,10 +360,10 @@ public abstract class CropImageActivity extends MonitoredActivity {
             }
 
         } catch (IOException e) {
-            Logger.e(e);
+            e.printStackTrace();
             setCropSaveException(e);
         } catch (OutOfMemoryError e) {
-            Logger.e(e.getMessage().toString());
+            e.printStackTrace();
             setCropSaveException(e);
         } finally {
             CropUtil.closeSilently(is);
@@ -386,7 +385,7 @@ public abstract class CropImageActivity extends MonitoredActivity {
             try {
                 outputStream = getContentResolver().openOutputStream(Uri.fromFile(saveFile));
                 if (outputStream != null) {
-                    String ext = FilenameUtils.getExtension(saveFile.getAbsolutePath());
+                    String ext = CurrentUtils.getExtension(saveFile.getAbsolutePath());
                     Bitmap.CompressFormat format;
                     if ( ext.equalsIgnoreCase("jpg") || ext.equalsIgnoreCase("jpeg") ) {
                         format = Bitmap.CompressFormat.JPEG;
@@ -398,7 +397,7 @@ public abstract class CropImageActivity extends MonitoredActivity {
                 }
             } catch (IOException e) {
                 setCropSaveException(e);
-                Logger.e(e);
+                e.printStackTrace();
             } finally {
                 CropUtil.closeSilently(outputStream);
             }

@@ -4,7 +4,7 @@ package com.tlf.basic.support.okhttp.builder;
 import com.google.gson.Gson;
 import com.tlf.basic.support.okhttp.request.GetRequest;
 import com.tlf.basic.support.okhttp.request.RequestCall;
-import com.tlf.basic.utils.Logger;
+import com.tlf.basic.support.utils.SupportLogger;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -64,7 +64,7 @@ public class GetBuilder extends OkHttpRequestBuilder implements HasParamsable
     public GetBuilder params(Map<String, String> params)
     {
         this.params = params;
-        Logger.json(OKHTTP_PARAMS,new Gson().toJson(params));
+        SupportLogger.json(OKHTTP_PARAMS,new Gson().toJson(params));
         return this;
     }
 
@@ -76,7 +76,7 @@ public class GetBuilder extends OkHttpRequestBuilder implements HasParamsable
             params = new LinkedHashMap<>();
         }
         params.put(key, val);
-        Logger.json(OKHTTP_PARAMS,"{'"+key+"':'"+val+"'}");
+        SupportLogger.json(OKHTTP_PARAMS,"{'"+key+"':'"+val+"'}");
         return this;
     }
 
@@ -87,7 +87,7 @@ public class GetBuilder extends OkHttpRequestBuilder implements HasParamsable
             this.params = new LinkedHashMap<>();
         }
         this.params.put("json", new Gson().toJson(mapParams));
-        Logger.json(OKHTTP_PARAMS,new Gson().toJson(mapParams));
+        SupportLogger.json(OKHTTP_PARAMS,new Gson().toJson(mapParams));
         return this;
     }
 
@@ -99,7 +99,7 @@ public class GetBuilder extends OkHttpRequestBuilder implements HasParamsable
             params = new LinkedHashMap<>();
         }
         params.put("json", "{'"+key+"':'"+val+"'}");
-        Logger.json(OKHTTP_PARAMS,"{'"+key+"':'"+val+"'}");
+        SupportLogger.json(OKHTTP_PARAMS,"{'"+key+"':'"+val+"'}");
         return this;
     }
 

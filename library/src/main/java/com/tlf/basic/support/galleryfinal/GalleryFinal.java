@@ -17,15 +17,14 @@
 package com.tlf.basic.support.galleryfinal;
 
 import android.content.Intent;
+import android.util.Log;
 
 import com.tlf.basic.support.R;
 import com.tlf.basic.support.galleryfinal.model.PhotoInfo;
 import com.tlf.basic.support.galleryfinal.utils.DeviceUtils;
 import com.tlf.basic.support.galleryfinal.utils.Utils;
-import com.tlf.basic.utils.Logger;
-import com.tlf.basic.utils.StringUtils;
-import com.tlf.basic.utils.ToastUtils;
-import com.tlf.basic.utils.io.FileUtils;
+import com.tlf.basic.support.utils.CurrentUtils;
+import com.tlf.basic.support.utils.SupportToastUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -93,7 +92,7 @@ public class GalleryFinal {
             if(callback != null) {
                 callback.onHanlderFailure(requestCode, mCoreConfig.getContext().getString(R.string.open_gallery_fail));
             }
-            Logger.e("FunctionConfig null");
+            Log.e("GalleryFinal","FunctionConfig null");
         }
     }
 
@@ -105,7 +104,7 @@ public class GalleryFinal {
      */
     public static void openGallerySingle(int requestCode, FunctionConfig config, OnHanlderResultCallback callback) {
         if ( mCoreConfig.getImageLoader() == null ) {
-            Logger.e("Please init GalleryFinal.");
+            Log.e("GalleryFinal","Please init GalleryFinal.");
             if(callback != null){
                 callback.onHanlderFailure(requestCode, mCoreConfig.getContext().getString(R.string.open_gallery_fail));
             }
@@ -120,7 +119,7 @@ public class GalleryFinal {
         }
 
         if (!DeviceUtils.existSDCard()) {
-            ToastUtils.show(mCoreConfig.getContext(), R.string.empty_sdcard);
+            SupportToastUtils.show(mCoreConfig.getContext(), R.string.empty_sdcard);
             return;
         }
         config.mutiSelect = false;
@@ -148,7 +147,7 @@ public class GalleryFinal {
             if(callback != null) {
                 callback.onHanlderFailure(requestCode, mCoreConfig.getContext().getString(R.string.open_gallery_fail));
             }
-            Logger.e("Please init GalleryFinal.");
+            Log.e("GalleryFinal","Please init GalleryFinal.");
         }
     }
 
@@ -160,7 +159,7 @@ public class GalleryFinal {
      */
     public static void openGalleryMuti(int requestCode, FunctionConfig config, OnHanlderResultCallback callback) {
         if ( mCoreConfig.getImageLoader() == null ) {
-            Logger.e("Please init GalleryFinal.");
+            Log.e("GalleryFinal","Please init GalleryFinal.");
             if(callback != null){
                 callback.onHanlderFailure(requestCode, mCoreConfig.getContext().getString(R.string.open_gallery_fail));
             }
@@ -189,7 +188,7 @@ public class GalleryFinal {
         }
 
         if (!DeviceUtils.existSDCard()) {
-            ToastUtils.show(mCoreConfig.getContext(), R.string.empty_sdcard);
+            SupportToastUtils.show(mCoreConfig.getContext(), R.string.empty_sdcard);
             return;
         }
 
@@ -218,7 +217,7 @@ public class GalleryFinal {
             if(callback != null) {
                 callback.onHanlderFailure(requestCode, mCoreConfig.getContext().getString(R.string.open_gallery_fail));
             }
-            Logger.e("Please init GalleryFinal.");
+            Log.e("GalleryFinal","Please init GalleryFinal.");
         }
     }
 
@@ -229,7 +228,7 @@ public class GalleryFinal {
      */
     public static void openCamera(int requestCode, FunctionConfig config, OnHanlderResultCallback callback) {
         if ( mCoreConfig.getImageLoader() == null ) {
-            Logger.e("Please init GalleryFinal.");
+            Log.e("GalleryFinal","Please init GalleryFinal.");
             if(callback != null){
                 callback.onHanlderFailure(requestCode, mCoreConfig.getContext().getString(R.string.open_gallery_fail));
             }
@@ -244,7 +243,7 @@ public class GalleryFinal {
         }
 
         if (!DeviceUtils.existSDCard()) {
-            ToastUtils.show(mCoreConfig.getContext(), R.string.empty_sdcard);
+            SupportToastUtils.show(mCoreConfig.getContext(), R.string.empty_sdcard);
             return;
         }
 
@@ -274,7 +273,7 @@ public class GalleryFinal {
             if(callback != null) {
                 callback.onHanlderFailure(requestCode, mCoreConfig.getContext().getString(R.string.open_gallery_fail));
             }
-            Logger.e("Please init GalleryFinal.");
+            Log.e("GalleryFinal","Please init GalleryFinal.");
         }
     }
 
@@ -287,7 +286,7 @@ public class GalleryFinal {
      */
     public static void openCrop(int requestCode, FunctionConfig config, String photoPath, OnHanlderResultCallback callback) {
         if ( mCoreConfig.getImageLoader() == null ) {
-            Logger.e("Please init GalleryFinal.");
+            Log.e("GalleryFinal","Please init GalleryFinal.");
             if(callback != null){
                 callback.onHanlderFailure(requestCode, mCoreConfig.getContext().getString(R.string.open_gallery_fail));
             }
@@ -302,12 +301,12 @@ public class GalleryFinal {
         }
 
         if (!DeviceUtils.existSDCard()) {
-            ToastUtils.show(mCoreConfig.getContext(), R.string.empty_sdcard);
+            SupportToastUtils.show(mCoreConfig.getContext(), R.string.empty_sdcard);
             return;
         }
 
-        if ( config == null || StringUtils.isEmpty(photoPath) || !new File(photoPath).exists()) {
-            Logger.d("config为空或文件不存在");
+        if ( config == null || CurrentUtils.isEmpty(photoPath) || !new File(photoPath).exists()) {
+            Log.d("GalleryFinal","config为空或文件不存在");
             return;
         }
         mRequestCode = requestCode;
@@ -345,7 +344,7 @@ public class GalleryFinal {
             if(callback != null) {
                 callback.onHanlderFailure(requestCode, mCoreConfig.getContext().getString(R.string.open_gallery_fail));
             }
-            Logger.e("Please init GalleryFinal.");
+            Log.e("GalleryFinal","Please init GalleryFinal.");
         }
     }
 
@@ -358,7 +357,7 @@ public class GalleryFinal {
      */
     public static void openEdit(int requestCode, FunctionConfig config, String photoPath, OnHanlderResultCallback callback) {
         if ( mCoreConfig.getImageLoader() == null ) {
-            Logger.e("Please init GalleryFinal.");
+            Log.e("GalleryFinal","Please init GalleryFinal.");
             if(callback != null){
                 callback.onHanlderFailure(requestCode, mCoreConfig.getContext().getString(R.string.open_gallery_fail));
             }
@@ -373,12 +372,12 @@ public class GalleryFinal {
         }
 
         if (!DeviceUtils.existSDCard()) {
-            ToastUtils.show(mCoreConfig.getContext(), R.string.empty_sdcard);
+            SupportToastUtils.show(mCoreConfig.getContext(), R.string.empty_sdcard);
             return;
         }
 
-        if ( config == null || StringUtils.isEmpty(photoPath) || !new File(photoPath).exists()) {
-            Logger.d("config为空或文件不存在");
+        if ( config == null || CurrentUtils.isEmpty(photoPath) || !new File(photoPath).exists()) {
+            Log.d("GalleryFinal","config为空或文件不存在");
             return;
         }
         mRequestCode = requestCode;
@@ -410,7 +409,7 @@ public class GalleryFinal {
                 public void run() {
                     super.run();
                     try {
-                        FileUtils.deleteDirectory(mCoreConfig.getEditPhotoCacheFolder());
+                        CurrentUtils.deleteDirectory(mCoreConfig.getEditPhotoCacheFolder());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

@@ -26,6 +26,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -37,12 +38,9 @@ import com.tlf.basic.support.galleryfinal.permission.EasyPermissions;
 import com.tlf.basic.support.galleryfinal.utils.DeviceUtils;
 import com.tlf.basic.support.galleryfinal.utils.MediaScanner;
 import com.tlf.basic.support.galleryfinal.utils.Utils;
-import com.tlf.basic.utils.ActivityManager;
-import com.tlf.basic.utils.DateUtils;
-import com.tlf.basic.utils.Logger;
-import com.tlf.basic.utils.StringUtils;
-import com.tlf.basic.utils.ToastUtils;
-import com.tlf.basic.utils.io.FileUtils;
+import com.tlf.basic.support.utils.SupportActivityManager;
+import com.tlf.basic.support.utils.CurrentUtils;
+import com.tlf.basic.support.utils.SupportToastUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -98,7 +96,7 @@ public abstract class PhotoBaseActivity extends AutoLayoutActivity implements Ea
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
-        ActivityManager.getActivityManager().addActivity(this);
+        SupportActivityManager.getActivityManager().addActivity(this);
         mMediaScanner = new MediaScanner(this);
         DisplayMetrics dm = DeviceUtils.getScreenPix(this);
         mScreenWidth = dm.widthPixels;
@@ -150,11 +148,11 @@ public abstract class PhotoBaseActivity extends AutoLayoutActivity implements Ea
         if (mMediaScanner != null) {
             mMediaScanner.unScanFile();
         }
-        ActivityManager.getActivityManager().finishActivity(this);
+        SupportActivityManager.getActivityManager().finishActivity(this);
     }
 
     public void toast(String msg) {
-        ToastUtils.show(this, msg);
+        SupportToastUtils.show(this,msg);
     }
 
     /**
@@ -171,15 +169,15 @@ public abstract class PhotoBaseActivity extends AutoLayoutActivity implements Ea
         }
 
         File takePhotoFolder = null;
-        if (StringUtils.isEmpty(mPhotoTargetFolder)) {
+        if (CurrentUtils.isEmpty(mPhotoTargetFolder)) {
             takePhotoFolder = GalleryFinal.getCoreConfig().getTakePhotoFolder();
         } else {
             takePhotoFolder = new File(mPhotoTargetFolder);
         }
-        boolean suc = FileUtils.mkdirs(takePhotoFolder);
-        File toFile = new File(takePhotoFolder, "IMG" + DateUtils.format(new Date(), "yyyyMMddHHmmss") + ".jpg");
+        boolean suc = CurrentUtils.mkdirs(takePhotoFolder);
+        File toFile = new File(takePhotoFolder, "IMG" + CurrentUtils.format(new Date(), "yyyyMMddHHmmss") + ".jpg");
 
-        Logger.d("create folder=" + toFile.getAbsolutePath());
+        Log.d("PhotoBaseActivity","create folder=" + toFile.getAbsolutePath());
         if (suc) {
             mTakePhotoUri = Uri.fromFile(toFile);
             Intent captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -187,7 +185,7 @@ public abstract class PhotoBaseActivity extends AutoLayoutActivity implements Ea
             startActivityForResult(captureIntent, GalleryFinal.TAKE_REQUEST_CODE);
         } else {
             takePhotoFailure();
-            Logger.e("create file failure");
+            Log.e("PhotoBaseActivity","create file failure");
         }
     }
 
@@ -269,8 +267,8 @@ public abstract class PhotoBaseActivity extends AutoLayoutActivity implements Ea
     }
 
     private void finishGalleryFinalPage() {
-        ActivityManager.getActivityManager().finishActivity(PhotoEditActivity.class);
-        ActivityManager.getActivityManager().finishActivity(PhotoSelectActivity.class);
+        SupportActivityManager.getActivityManager().finishActivity(PhotoEditActivity.class);
+        SupportActivityManager.getActivityManager().finishActivity(PhotoSelectActivity.class);
         Global.mPhotoSelectActivity = null;
         System.gc();
     }

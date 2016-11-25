@@ -2,7 +2,7 @@ package com.tlf.basic.support.okhttp.log;
 
 import android.text.TextUtils;
 
-import com.tlf.basic.utils.Logger;
+import com.tlf.basic.support.utils.SupportLogger;
 
 import java.io.IOException;
 
@@ -64,13 +64,13 @@ public class LoggerInterceptor implements Interceptor {
                                 String responseBody = JsonReader.getInstance().getJsonReaderFileContent(BaseApplication.appContext, clone.request().url().toString());
                                 resp =  responseBody;
                             }*/
-                            Logger.d(tag, "" + clone.request().url().toString());
-                            Logger.d(tag, "" + resp+"");
-                            Logger.json(tag, "" + resp);
+                            SupportLogger.d(tag, "" + clone.request().url().toString());
+                            SupportLogger.d(tag, "" + resp+"");
+                            SupportLogger.json(tag, "" + resp);
                             body = ResponseBody.create(mediaType, resp);
                             return response.newBuilder().body(body).build();
                         } else {
-                            Logger.i(tag, "responseBody's content : " + " maybe [file part] , too large too print , ignored!");
+                            SupportLogger.i(tag, "responseBody's content : " + " maybe [file part] , too large too print , ignored!");
                         }
                         //Logger.d(tag, "" + body.string());
                         //Logger.json(tag, "" + body.string());

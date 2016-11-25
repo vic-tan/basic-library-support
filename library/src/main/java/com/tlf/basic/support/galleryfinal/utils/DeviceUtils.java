@@ -32,7 +32,7 @@ import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 
-import com.tlf.basic.utils.StringUtils;
+import com.tlf.basic.support.utils.CurrentUtils;
 
 import java.io.File;
 import java.math.BigInteger;
@@ -226,7 +226,7 @@ public class DeviceUtils {
     public static String getIMEI(Context context) {
         TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         String imei = tm.getDeviceId();
-        if ( StringUtils.isEmpty(imei) ) {
+        if (CurrentUtils.isEmpty(imei) ) {
             imei = "";
         }
 
@@ -243,7 +243,7 @@ public class DeviceUtils {
                 .getSystemService(Context.WIFI_SERVICE);
         WifiInfo info = wifi.getConnectionInfo();
         String mac = info.getMacAddress();
-        if ( StringUtils.isEmpty(mac) ) {
+        if (CurrentUtils.isEmpty(mac) ) {
             mac = "";
         }
         return mac;
@@ -257,13 +257,13 @@ public class DeviceUtils {
     public static String getUDID(Context context) {
         String udid = Settings.Secure.getString(context.getContentResolver(),
                 Settings.Secure.ANDROID_ID);
-        if (StringUtils.isEmpty(udid) || udid.equals("9774d56d682e549c")
+        if (CurrentUtils.isEmpty(udid) || udid.equals("9774d56d682e549c")
                 || udid.length() < 15) {
             SecureRandom random = new SecureRandom();
             udid = new BigInteger(64, random).toString(16);
         }
 
-        if ( StringUtils.isEmpty(udid) ) {
+        if ( CurrentUtils.isEmpty(udid) ) {
             udid = "";
         }
 

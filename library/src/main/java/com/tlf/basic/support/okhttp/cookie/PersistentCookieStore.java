@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.text.TextUtils;
 
-import com.tlf.basic.utils.Logger;
+import com.tlf.basic.support.utils.SupportLogger;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -207,7 +207,7 @@ public class PersistentCookieStore implements CookieStore
             outputStream.writeObject(cookie);
         } catch (IOException e)
         {
-            Logger.d(LOG_TAG, "IOException in encodeCookie "+e);
+            SupportLogger.d(LOG_TAG, "IOException in encodeCookie "+e);
             return null;
         }
 
@@ -231,10 +231,10 @@ public class PersistentCookieStore implements CookieStore
             cookie = ((SerializableHttpCookie) objectInputStream.readObject()).getCookie();
         } catch (IOException e)
         {
-            Logger.d(LOG_TAG, "IOException in decodeCookie "+ e);
+            SupportLogger.d(LOG_TAG, "IOException in decodeCookie "+ e);
         } catch (ClassNotFoundException e)
         {
-            Logger.d(LOG_TAG, "ClassNotFoundException in decodeCookie "+ e);
+            SupportLogger.d(LOG_TAG, "ClassNotFoundException in decodeCookie "+ e);
         }
 
         return cookie;

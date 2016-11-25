@@ -43,11 +43,8 @@ import com.tlf.basic.support.galleryfinal.widget.HorizontalListView;
 import com.tlf.basic.support.galleryfinal.widget.crop.CropImageActivity;
 import com.tlf.basic.support.galleryfinal.widget.crop.CropImageView;
 import com.tlf.basic.support.galleryfinal.widget.zoonview.PhotoView;
-import com.tlf.basic.utils.ActivityManager;
-import com.tlf.basic.utils.Logger;
-import com.tlf.basic.utils.StringUtils;
-import com.tlf.basic.utils.io.FileUtils;
-import com.tlf.basic.utils.io.FilenameUtils;
+import com.tlf.basic.support.utils.SupportActivityManager;
+import com.tlf.basic.support.utils.CurrentUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -102,7 +99,6 @@ public class PhotoEditActivity extends CropImageActivity implements AdapterView.
     private File mEditPhotoCacheFile;
 
     private Drawable mDefaultDrawable;
-
 
     private boolean mCropPhotoAction;//裁剪图片动作
     private boolean mEditPhotoAction;//编辑图片动作
@@ -372,7 +368,7 @@ public class PhotoEditActivity extends CropImageActivity implements AdapterView.
             }
             mPhotoEditListAdapter.notifyDataSetChanged();
 
-            PhotoSelectActivity activity = (PhotoSelectActivity) ActivityManager.getActivityManager().getActivity(PhotoSelectActivity.class.getName());
+            PhotoSelectActivity activity = (PhotoSelectActivity) SupportActivityManager.getActivityManager().getActivity(PhotoSelectActivity.class.getName());
             if (activity != null) {
                 activity.takeRefreshGallery(info, true);
             }
@@ -400,7 +396,7 @@ public class PhotoEditActivity extends CropImageActivity implements AdapterView.
 
     public void deleteIndex(int position, PhotoInfo dPhoto) {
         if (dPhoto != null) {
-            PhotoSelectActivity activity = (PhotoSelectActivity) ActivityManager.getActivityManager().getActivity(PhotoSelectActivity.class.getName());
+            PhotoSelectActivity activity = (PhotoSelectActivity) SupportActivityManager.getActivityManager().getActivity(PhotoSelectActivity.class.getName());
             if (activity != null) {
                 activity.deleteSelect(dPhoto.getPhotoId());
             }
@@ -469,7 +465,7 @@ public class PhotoEditActivity extends CropImageActivity implements AdapterView.
                 System.gc();
                 PhotoInfo photoInfo = mPhotoList.get(mSelectIndex);
                 try {
-                    String ext = FilenameUtils.getExtension(photoInfo.getPhotoPath());
+                    String ext = CurrentUtils.getExtension(photoInfo.getPhotoPath());
                     File toFile;
                     if (GalleryFinal.getFunctionConfig().isCropReplaceSource()) {
                         toFile = new File(photoInfo.getPhotoPath());
@@ -477,10 +473,10 @@ public class PhotoEditActivity extends CropImageActivity implements AdapterView.
                         toFile = new File(mEditPhotoCacheFile, Utils.getFileName(photoInfo.getPhotoPath()) + "_crop." + ext);
                     }
 
-                    FileUtils.mkdirs(toFile.getParentFile());
+                    CurrentUtils.mkdirs(toFile.getParentFile());
                     onSaveClicked(toFile);//保存裁剪
                 } catch (Exception e) {
-                    Logger.e(e);
+                    e.printStackTrace();
                 }
             } else { //完成选择
                 resultAction();
@@ -489,8 +485,8 @@ public class PhotoEditActivity extends CropImageActivity implements AdapterView.
 
             if (mPhotoList.size() > 0) {
                 PhotoInfo photoInfo = mPhotoList.get(mSelectIndex);
-                String ext = FilenameUtils.getExtension(photoInfo.getPhotoPath());
-                if (StringUtils.isEmpty(ext) || !(ext.equalsIgnoreCase("png") || ext.equalsIgnoreCase("jpg") || ext.equalsIgnoreCase("jpeg"))) {
+                String ext = CurrentUtils.getExtension(photoInfo.getPhotoPath());
+                if (CurrentUtils.isEmpty(ext) || !(ext.equalsIgnoreCase("png") || ext.equalsIgnoreCase("jpg") || ext.equalsIgnoreCase("jpeg"))) {
                     toast(getString(R.string.edit_letoff_photo_format));
                 } else {
                     if (mCropState) {
@@ -550,8 +546,8 @@ public class PhotoEditActivity extends CropImageActivity implements AdapterView.
     private void rotatePhoto() {
         if (mPhotoList.size() > 0 && mPhotoList.get(mSelectIndex) != null && !mRotating) {
             final PhotoInfo photoInfo = mPhotoList.get(mSelectIndex);
-            final String ext = FilenameUtils.getExtension(photoInfo.getPhotoPath());
-            if (StringUtils.isEmpty(ext) || !(ext.equalsIgnoreCase("png") || ext.equalsIgnoreCase("jpg") || ext.equalsIgnoreCase("jpeg"))) {
+            final String ext = CurrentUtils.getExtension(photoInfo.getPhotoPath());
+            if (CurrentUtils.isEmpty(ext) || !(ext.equalsIgnoreCase("png") || ext.equalsIgnoreCase("jpg") || ext.equalsIgnoreCase("jpeg"))) {
                 toast(getString(R.string.edit_letoff_photo_format));
                 return;
             }
@@ -631,6 +627,7 @@ public class PhotoEditActivity extends CropImageActivity implements AdapterView.
             }
         }
     }
+
 
     private void corpPageState(boolean crop) {
         if (crop) {
