@@ -2,6 +2,7 @@ package com.tlf.basic.support.okhttp.log;
 
 import android.text.TextUtils;
 
+import com.tlf.basic.support.okhttp.OkHttpUtils;
 import com.tlf.basic.support.utils.SupportLogger;
 
 import java.io.IOException;
@@ -41,8 +42,6 @@ public class LoggerInterceptor implements Interceptor {
         Request request = chain.request();
         logForRequest(request);
         Response response = chain.proceed(request);
-
-
         return logForResponse(response,request);
     }
 
@@ -64,9 +63,11 @@ public class LoggerInterceptor implements Interceptor {
                                 String responseBody = JsonReader.getInstance().getJsonReaderFileContent(BaseApplication.appContext, clone.request().url().toString());
                                 resp =  responseBody;
                             }*/
-                            SupportLogger.d(tag, "" + clone.request().url().toString());
-                            SupportLogger.d(tag, "" + resp+"");
-                            SupportLogger.json(tag, "" + resp);
+                            if(!OkHttpUtils.okHttpConsole.isOn_of_level()){
+                                SupportLogger.d(tag, "" + clone.request().url().toString());
+                                SupportLogger.d(tag, "" + resp+"");
+                                SupportLogger.json(tag, "" + resp);
+                            }
                             body = ResponseBody.create(mediaType, resp);
                             return response.newBuilder().body(body).build();
                         } else {

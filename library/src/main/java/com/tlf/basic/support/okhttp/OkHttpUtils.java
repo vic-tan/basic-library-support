@@ -3,6 +3,7 @@ package com.tlf.basic.support.okhttp;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.tlf.basic.support.okhttp.bean.OkHttpConsole;
 import com.tlf.basic.support.okhttp.builder.GetBuilder;
 import com.tlf.basic.support.okhttp.builder.HeadBuilder;
 import com.tlf.basic.support.okhttp.builder.OtherRequestBuilder;
@@ -37,6 +38,7 @@ public class OkHttpUtils
     private static OkHttpUtils mInstance;
     private OkHttpClient mOkHttpClient;
     private Handler mDelivery;
+    public static OkHttpConsole okHttpConsole;
 
     public OkHttpUtils(OkHttpClient okHttpClient)
     {
@@ -62,6 +64,15 @@ public class OkHttpUtils
 
     }
 
+    /**
+     * showResponse may cause error, but you can try .
+     * @return
+     */
+    public OkHttpUtils console(OkHttpConsole okHttpConsole)
+    {
+        this.okHttpConsole = okHttpConsole;
+        return this;
+    }
 
     public OkHttpUtils debug(String tag)
     {

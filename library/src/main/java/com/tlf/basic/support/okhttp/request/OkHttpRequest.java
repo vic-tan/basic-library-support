@@ -3,6 +3,7 @@ package com.tlf.basic.support.okhttp.request;
 
 
 
+import com.tlf.basic.support.okhttp.OkConsoleUtils;
 import com.tlf.basic.support.okhttp.callback.Callback;
 
 import java.util.Map;
@@ -26,7 +27,7 @@ public abstract class OkHttpRequest
     protected OkHttpRequest(String url, Object tag,
                             Map<String, String> params, Map<String, String> headers)
     {
-        this.url = url;
+        this.url = OkConsoleUtils.randomRequest(url);
         this.tag = tag;
         this.params = params;
         this.headers = headers;
