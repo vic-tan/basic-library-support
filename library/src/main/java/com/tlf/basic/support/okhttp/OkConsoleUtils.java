@@ -16,7 +16,7 @@ public class OkConsoleUtils {
             }
             if (OkHttpUtils.okHttpConsole.isOn_of_level() && OkHttpUtils.okHttpConsole.is_random()) {//开始
                 int random = getRandom(0, OkHttpUtils.okHttpConsole.getRandom_max());
-                if (random == 1) {
+                if (random == 0) {
                     return insertStringInParticularPosition(url);
                 } else {
                     return url;

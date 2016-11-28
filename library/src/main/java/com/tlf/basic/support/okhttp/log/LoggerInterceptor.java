@@ -42,11 +42,11 @@ public class LoggerInterceptor implements Interceptor {
         Request request = chain.request();
         logForRequest(request);
         Response response = chain.proceed(request);
-        return logForResponse(response,request);
+        return logForResponse(response, request);
     }
 
 
-    private Response logForResponse(Response response,Request request) {
+    private Response logForResponse(Response response, Request request) {
         try {
             //===>response log
             Response.Builder builder = response.newBuilder();
@@ -63,10 +63,20 @@ public class LoggerInterceptor implements Interceptor {
                                 String responseBody = JsonReader.getInstance().getJsonReaderFileContent(BaseApplication.appContext, clone.request().url().toString());
                                 resp =  responseBody;
                             }*/
-                            if(!OkHttpUtils.okHttpConsole.isOn_of_level()){
-                                SupportLogger.d(tag, "" + clone.request().url().toString());
-                                SupportLogger.d(tag, "" + resp+"");
-                                SupportLogger.json(tag, "" + resp);
+
+                            try {
+                                if (null == OkHttpUtils.okHttpConsole) {
+                                    SupportLogger.d(tag, "" + clone.request().url().toString());
+                                    SupportLogger.d(tag, "" + resp + "");
+                                    SupportLogger.json(tag, "" + resp);
+                                }
+                                if (null != OkHttpUtils.okHttpConsole && !OkHttpUtils.okHttpConsole.isOn_of_level()) {
+                                    SupportLogger.d(tag, "" + clone.request().url().toString());
+                                    SupportLogger.d(tag, "" + resp + "");
+                                    SupportLogger.json(tag, "" + resp);
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
                             body = ResponseBody.create(mediaType, resp);
                             return response.newBuilder().body(body).build();
